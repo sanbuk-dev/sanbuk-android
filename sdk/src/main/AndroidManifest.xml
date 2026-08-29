@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    One permission, declared here so no publisher has to add it — and nothing
+    else. No location (the server resolves the province from the request), no
+    phone state, no advertising id. Every extra permission is a reason for a
+    publisher to say no, and a line they have to defend on their store listing.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+</manifest>

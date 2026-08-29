@@ -1,0 +1,24 @@
+# Deliberately short. Every dependency an ad SDK takes is weight in a
+# publisher's app and a version conflict waiting to happen — the whole core is
+# stdlib plus org.json, which Android has had in the framework since API 1.
+[versions]
+kotlin = "2.0.21"
+agp = "8.5.2"
+json = "20240303"
+robolectric = "4.13"
+androidx-test-core = "1.6.1"
+
+[libraries]
+# compileOnly in core, testImplementation for the JVM tests: on Android the
+# framework provides these classes, so shipping them would be dead weight.
+json = { module = "org.json:json", version.ref = "json" }
+# Test-only. The Android layer is otherwise untestable without a device, and
+# shipping untested code into third-party apps is not an option. Never reaches
+# the AAR: testImplementation only.
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test-core" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
