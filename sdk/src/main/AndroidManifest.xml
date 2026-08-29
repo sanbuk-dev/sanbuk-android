@@ -8,4 +8,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application>
+        <!--
+            The full-screen ad gets its own activity rather than a dialog over
+            the publisher's: an ad inside somebody else's activity inherits
+            their lifecycle, their back handling and their configuration
+            changes, and each of those is a way to leave a half-dismissed ad on
+            screen. A separate activity is also what makes "the app is paused
+            while this is up" true, which is what a game needs.
+
+            A framework theme, so no appcompat. configChanges keeps a rotation
+            from destroying and recreating the ad mid-view, which would restart
+            its timer and could show it twice.
+        -->
+        <activity
+            android:name="ir.sanbuk.sdk.internal.FullscreenActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode" />
+    </application>
 </manifest>

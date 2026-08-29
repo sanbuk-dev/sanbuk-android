@@ -6,4 +6,8 @@
 -keep public class ir.sanbuk.sdk.SanbukAd { public *; }
 -keep public class ir.sanbuk.sdk.SanbukAdView { public *; }
 -keep public class ir.sanbuk.sdk.SanbukStyle { public *; }
+-keep public class ir.sanbuk.sdk.SanbukFullscreen { public *; }
+-keep public interface ir.sanbuk.sdk.SanbukFullscreen$Callbacks { public *; }
+# Named in the merged manifest, so it is reached by name, not by a call site.
+-keep class ir.sanbuk.sdk.internal.FullscreenActivity { *; }
 -keepnames class ir.sanbuk.sdk.core.** { *; }

@@ -1,6 +1,7 @@
 package ir.sanbuk.sdk.internal
 
 import android.graphics.Rect
+import android.os.SystemClock
 import android.view.View
 import android.view.ViewTreeObserver
 import ir.sanbuk.sdk.core.Viewability
@@ -29,7 +30,10 @@ import ir.sanbuk.sdk.core.Viewability
  */
 internal class ViewabilityTracker(
     private val view: View,
-    private val clock: () -> Long = System::currentTimeMillis,
+    // Uptime rather than wall clock: a duration measured against a clock that
+    // can jump backwards on an NTP correction is a duration that can never
+    // finish, and one that can jump forwards is a view nobody had.
+    private val clock: () -> Long = SystemClock::uptimeMillis,
     private val onSeen: () -> Unit,
 ) {
 

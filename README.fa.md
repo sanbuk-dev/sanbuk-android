@@ -26,6 +26,22 @@ ad.recordImpression()   // وقتی واقعاً روی صفحه است
 ad.click()              // وقتی کاربر رویش زد
 ```
 
+**تمام‌صفحه** — اینترستیشیال بین دو لحظه، یا آگهی پاداشی که کاربر خودش خواسته:
+
+```kotlin
+SanbukFullscreen.load(context, "LEVEL-END") { ad -> pending = ad }
+
+pending?.show(activity, callbacks = object : SanbukFullscreen.Callbacks {
+    override fun onClosed() = startNextLevel()
+})
+
+SanbukFullscreen.loadRewarded(context, "EXTRA-LIFE") { ad ->
+    ad?.show(activity, callbacks = object : SanbukFullscreen.Callbacks {
+        override fun onReward() = grantExtraLife()
+    })
+}
+```
+
 ---
 
 ## داده اول: سرور تبلیغ را توصیف می‌کند، اپ تو آن را می‌کشد
@@ -64,8 +80,11 @@ ad.click()              // وقتی کاربر رویش زد
 | `ClickLauncher` | Custom Tab، با فالبک به مرورگر — هرگز WebView | ۴ |
 | `Storage` | هویت نصب و شمارنده‌هایی که از پروسه بیشتر عمر می‌کنند | ۴ |
 | `ViewabilityTracker` | تغذیهٔ قاعده هم از تغییر هندسه و هم از یک ساعت | ۴ |
+| `FullscreenPolicy` | چه وقت اینترستیشیال مجاز است قطع کند و چه وقت بستنش | ۶ |
+| `RewardPolicy` | اینکه آگهی پاداشی واقعاً تماشا شده یا نه | ۵ |
+| `FullscreenActivity` | صفحهٔ تمام‌صفحه: گیت‌ها، شمارش معکوس، جایزه، بستن | ۸ |
 
-**۴۹ تست، صفر شکست.** حجم AAR ریلیز: **۸۸ کیلوبایت، بدون هیچ وابستگی.**
+**۷۰ تست، صفر شکست.** حجم AAR ریلیز: **۱۱۳ کیلوبایت، بدون هیچ وابستگی.**
 
 ## یک آرتیفکت خودبسنده
 

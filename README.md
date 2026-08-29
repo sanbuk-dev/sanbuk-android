@@ -26,6 +26,22 @@ ad.recordImpression()   // when it is really on screen
 ad.click()              // when the user taps it
 ```
 
+**Full screen** — an interstitial between two moments, or a rewarded ad someone opted into:
+
+```kotlin
+SanbukFullscreen.load(context, "LEVEL-END") { ad -> pending = ad }
+
+pending?.show(activity, callbacks = object : SanbukFullscreen.Callbacks {
+    override fun onClosed() = startNextLevel()
+})
+
+SanbukFullscreen.loadRewarded(context, "EXTRA-LIFE") { ad ->
+    ad?.show(activity, callbacks = object : SanbukFullscreen.Callbacks {
+        override fun onReward() = grantExtraLife()
+    })
+}
+```
+
 ---
 
 ## Data first: the server describes an ad, your app draws it
@@ -64,8 +80,11 @@ A side benefit: `core` compiles and tests on any JDK, with no Android SDK in sig
 | `ClickLauncher` | Custom Tab, falling back to the browser — never a WebView | 4 |
 | `Storage` | install identity and counters that outlive the process | 4 |
 | `ViewabilityTracker` | feeds the rule from both geometry changes and a clock | 4 |
+| `FullscreenPolicy` | when an interstitial may interrupt, and when it may be closed | 6 |
+| `RewardPolicy` | whether a rewarded ad was actually watched | 5 |
+| `FullscreenActivity` | the full-screen screen: gates, countdown, reward, dismissal | 8 |
 
-**49 tests, zero failures.** Release AAR: **88 KB, no dependencies.**
+**70 tests, zero failures.** Release AAR: **113 KB, no dependencies.**
 
 ## One self-contained artifact
 

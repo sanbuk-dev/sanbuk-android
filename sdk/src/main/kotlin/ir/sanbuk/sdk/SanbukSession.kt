@@ -3,12 +3,14 @@ package ir.sanbuk.sdk
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
+import android.os.SystemClock
 import ir.sanbuk.sdk.core.Ad
 import ir.sanbuk.sdk.core.AdParser
 import ir.sanbuk.sdk.core.AdRequest
 import ir.sanbuk.sdk.core.AdResponse
 import ir.sanbuk.sdk.core.Connection
 import ir.sanbuk.sdk.core.FrequencyCounters
+import ir.sanbuk.sdk.core.FullscreenPolicy
 import ir.sanbuk.sdk.core.ImpressionQueue
 import ir.sanbuk.sdk.core.ImpressionUrl
 import ir.sanbuk.sdk.core.QueuedImpression
@@ -56,6 +58,30 @@ internal class SanbukSession(
 
     @Volatile
     private var counters: FrequencyCounters? = null
+
+    /**
+     * One per process, which is the whole point of it. "Not back to back" and
+     * "three per session" are statements about a person's afternoon, not about
+     * one screen — a policy built per show would count to one forever and
+     * enforce nothing.
+     */
+    internal val fullscreenPolicy = FullscreenPolicy()
+
+    /**
+     * When this process started, as closely as we can tell. The quiet window
+     * after launch belongs to the app's own first screen, so measuring it from
+     * init() would hand a late-initialising publisher a window that has
+     * already passed.
+     */
+    internal val sessionStartedAtMillis: Long =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            android.os.Process.getStartUptimeMillis()
+        } else {
+            // Before API 24 the process start is not exposed. Init time is the
+            // best available stand-in, and a close one: publishers are told to
+            // call init() from Application.onCreate.
+            SystemClock.uptimeMillis()
+        }
 
     init {
         SanbukLog.enabled = config.debug
