@@ -16,7 +16,11 @@ import android.graphics.Color
  * annotation would pull in androidx.annotation, and this SDK ships with no
  * runtime dependencies at all.
  */
-public data class SanbukStyle(
+// @JvmOverloads so Java — and every shell that reaches this SDK over JNI —
+// gets a no-argument constructor. Kotlin default arguments produce none on
+// their own, which left Unity unable to build a default style and therefore
+// unable to reach any overload that takes one.
+public data class SanbukStyle @JvmOverloads constructor(
     public val backgroundColor: Int? = null,
     public val textColor: Int? = null,
     public val secondaryTextColor: Int? = null,

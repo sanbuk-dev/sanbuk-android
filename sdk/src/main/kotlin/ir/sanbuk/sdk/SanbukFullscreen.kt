@@ -110,6 +110,22 @@ public class SanbukFullscreen internal constructor(
         }
     }
 
+    /**
+     * The same show, for a caller that wants the callbacks and the default
+     * style.
+     *
+     * @JvmOverloads fills in arguments from the right, so it can produce
+     * show(context) and show(context, style) but never show(context,
+     * callbacks) — and callbacks are not optional for a rewarded ad, where
+     * onReward is the entire point. Unity and React Native reach the SDK by
+     * JVM signature and cannot use named arguments, so without this they had
+     * to construct a style they did not want in order to learn whether the
+     * player earned anything.
+     */
+    public fun show(context: Context, callbacks: Callbacks) {
+        show(context, SanbukStyle(), callbacks)
+    }
+
     public companion object {
 
         /** An interstitial: shown when the app decides, gated by the rules above. */

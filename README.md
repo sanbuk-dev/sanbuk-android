@@ -16,10 +16,24 @@ dependencies {
 }
 ```
 
-There is nothing to resolve — the artifact carries everything it needs and declares no
-dependencies at all. That is deliberate: plenty of the builds we care about cannot reach a
-Maven repository, and an artifact that throws `NoClassDefFoundError` on first launch is
-worse than no artifact.
+The artifact declares no dependencies and pulls in no libraries of its own — no androidx,
+no networking library, no JSON parser. That is deliberate: plenty of the builds we care
+about cannot reach a Maven repository, and an artifact that throws `NoClassDefFoundError`
+on first launch is worse than no artifact.
+
+One thing it does need, and every Kotlin project already has: **the Kotlin standard
+library.** The SDK is written in Kotlin, so its classes reference `kotlin.jvm.internal.*`.
+A `files(...)` dependency carries no metadata, so nothing adds the stdlib on your behalf.
+If your app uses Kotlin — almost all do — you already have it and there is nothing to do.
+**If your app is pure Java, add it:**
+
+```kotlin
+implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+```
+
+Without it the app compiles and installs, then dies on the first Sanbuk call. The Unity
+package ships the stdlib as a file for exactly this reason, since a Unity project has no
+Kotlin of its own.
 
 ```kotlin
 // once, in Application.onCreate

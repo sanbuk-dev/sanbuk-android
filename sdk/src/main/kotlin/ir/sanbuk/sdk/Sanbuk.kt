@@ -49,6 +49,22 @@ public object Sanbuk {
         init(context, SanbukConfig(mediaCode = mediaCode))
     }
 
+    /**
+     * The same, with diagnostics — the one option a shell needs and the only
+     * one it cannot reach.
+     *
+     * [SanbukConfig] carries the tracker URL between the media code and this
+     * flag, and Kotlin default arguments fill in from the right, so no
+     * generated constructor takes a code and a flag without a URL in between.
+     * A shell reaching this SDK over JNI cannot use named arguments, which left
+     * Unity and React Native choosing between no diagnostics at all and
+     * hard-coding our own endpoint into their build — where it would quietly
+     * stop matching ours.
+     */
+    public fun init(context: Context, mediaCode: String, debug: Boolean) {
+        init(context, SanbukConfig(mediaCode = mediaCode, debug = debug))
+    }
+
     public val isInitialised: Boolean get() = session != null
 
     /**
