@@ -8,5 +8,5 @@ plugins {
 // promises publishers is ir.sanbuk:sdk-android; core ships beside it.
 allprojects {
     group = "ir.sanbuk"
-    version = "0.1.0-SNAPSHOT"
+    version = "0.1.0"
 }
