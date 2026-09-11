@@ -4,7 +4,22 @@ Official Android SDK for [Sanbuk](https://sanbuk.com) — publisher ad serving i
 
 **[راهنمای فارسی →](README.fa.md)**
 
-> **Status: in development.** Both modules build and test; nothing is published to Maven Central yet. Interstitial, rewarded and the Unity/Flutter shells come later.
+> **Status: first preview — [v0.1.0](https://github.com/sanbuk-dev/sanbuk-android/releases/latest).** Banner, native, interstitial and rewarded all work. Not on Maven Central: the `.aar` is self-contained, so you drop it in. The Unity and Flutter shells come later.
+
+## Installing
+
+Download `sanbuk-android-0.1.0.aar` from the [latest release](https://github.com/sanbuk-dev/sanbuk-android/releases/latest), put it in your `libs/` folder, and add:
+
+```kotlin
+dependencies {
+    implementation(files("libs/sanbuk-android-0.1.0.aar"))
+}
+```
+
+There is nothing to resolve — the artifact carries everything it needs and declares no
+dependencies at all. That is deliberate: plenty of the builds we care about cannot reach a
+Maven repository, and an artifact that throws `NoClassDefFoundError` on first launch is
+worse than no artifact.
 
 ```kotlin
 // once, in Application.onCreate

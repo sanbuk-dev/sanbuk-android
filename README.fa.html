@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanbuk Android SDK — سنبوک</title>
+<meta name="generator" content="sanbuk md2html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{
+  --accent:#060ADB; --accent-2:#3f47ff; --accent-soft:#eef0ff;
+  --ink:#1c2030; --muted:#5c6172; --line:#e3e6ef;
+  --bg:#f5f6fa; --card:#ffffff; --code-bg:#1e2233; --code-ink:#e8ebf5;
+  --ok:#12805c; --ok-bg:#f1fbf7; --ok-line:#bfe6d6;
+  --warn:#d64545; --warn-bg:#fff5f5; --warn-line:#f3d0d0;
+  --info-bg:#f3f7ff; --info-line:#cddcff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Vazirmatn","Vazir","IRANSans","IRANYekan",Tahoma,"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);
+  line-height:2;font-size:16.5px;
+  padding:32px 16px 64px;
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1000px;margin:0 auto;background:var(--card);
+  border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 10px 40px rgba(6,10,219,.06);overflow:hidden}
+header.doc{
+  padding:34px 44px 26px;border-bottom:4px solid var(--accent);
+  background:linear-gradient(180deg,#fbfbfe 0%,#f1f2ff 100%);
+}
+header.doc .kicker{font-size:12.5px;letter-spacing:.03em;color:var(--muted);
+  direction:ltr;text-align:start;unicode-bidi:isolate;font-family:var(--mono,ui-monospace,Menlo,Consolas,monospace)}
+header.doc h1{font-size:27px;font-weight:800;color:var(--accent);line-height:1.7;margin:8px 0 0}
+header.doc .sub{font-size:14.5px;color:var(--muted);margin-top:8px}
+header.doc .chips{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:12px;background:var(--accent-soft);color:var(--accent);
+  border:1px solid #d5d9ff;border-radius:999px;padding:3px 12px;line-height:1.9;
+  text-decoration:none;display:inline-block}
+.chip.plain{background:#f6f7fb;color:var(--muted);border-color:var(--line)}
+main{padding:34px 44px 44px}
+h1,h2,h3,h4,h5,h6{line-height:1.75;scroll-margin-top:20px}
+main h1{font-size:23px;font-weight:800;color:var(--accent);margin:38px 0 16px}
+h2{font-size:20px;font-weight:800;color:var(--accent);
+  margin:44px 0 16px;padding-inline-start:14px;border-inline-start:5px solid var(--accent)}
+h3{font-size:17.5px;font-weight:800;margin:28px 0 10px;color:#2a2f45}
+h4{font-size:16px;font-weight:700;margin:22px 0 8px;color:#39405c}
+h5,h6{font-size:15px;font-weight:700;margin:18px 0 8px;color:var(--muted)}
+main > :first-child{margin-top:0}
+p{margin:0 0 15px;text-align:justify;text-justify:inter-word}
+p[dir=ltr]{text-align:left}
+ul,ol{margin:0 0 16px;padding-inline-start:26px}
+li{margin-bottom:6px}
+li > ul,li > ol{margin:8px 0 4px}
+li[dir=ltr]{text-align:left}
+ul.tasklist{list-style:none;padding-inline-start:6px}
+ul.tasklist input{margin-inline-end:8px;transform:translateY(2px)}
+strong{font-weight:700;color:#111634}
+del{color:var(--muted)}
+a{color:var(--accent-2);text-decoration:none;border-bottom:1px solid #c9cdff}
+a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+hr{border:none;border-top:1px solid var(--line);margin:32px 0}
+img{max-width:100%;height:auto;border-radius:8px}
+blockquote.quote{
+  background:var(--accent-soft);border:1px solid #d5d9ff;
+  border-inline-start:5px solid var(--accent);border-radius:10px;
+  padding:16px 20px;margin:20px 0}
+blockquote.quote > :last-child{margin-bottom:0}
+blockquote.quote.danger{background:var(--warn-bg);border-color:var(--warn-line);border-inline-start-color:var(--warn)}
+blockquote.quote.ok{background:var(--ok-bg);border-color:var(--ok-line);border-inline-start-color:var(--ok)}
+blockquote.quote.info{background:var(--info-bg);border-color:var(--info-line);border-inline-start-color:var(--accent-2)}
+blockquote blockquote{margin:14px 0}
+.tablewrap{overflow-x:auto;margin:20px 0 24px;border-radius:12px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.9;background:#fff}
+th{background:var(--accent);color:#fff;font-weight:700;padding:10px 14px;white-space:nowrap}
+td{border-top:1px solid var(--line);padding:9px 14px;vertical-align:top}
+tbody tr:nth-child(even){background:#fafbff}
+code{
+  direction:ltr;unicode-bidi:isolate;
+  font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  font-size:13px;background:#f0f1f8;border:1px solid #e2e4f0;
+  border-radius:6px;padding:1px 6px;color:#2b3060;word-break:break-word}
+.codewrap{position:relative;margin:16px 0 22px}
+.codewrap .lang{
+  position:absolute;inset-block-start:10px;inset-inline-end:14px;
+  font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+  color:#8b93bf;font-family:ui-monospace,Menlo,Consolas,monospace;
+  pointer-events:none}
+pre{
+  direction:ltr;text-align:left;unicode-bidi:isolate;
+  background:var(--code-bg);color:var(--code-ink);
+  border-radius:12px;padding:18px 20px;overflow-x:auto;
+  font-size:13px;line-height:1.8;
+  font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  tab-size:2}
+pre code{background:none;border:none;padding:0;color:inherit;font-size:13px;white-space:pre}
+.toc{background:#fafbff;border:1px solid var(--line);border-radius:12px;
+  padding:18px 24px;margin:0 0 30px;font-size:15px}
+.toc .toc-title{font-weight:800;color:var(--accent);margin-bottom:8px;font-size:15px}
+.toc ul{list-style:none;margin:0;padding:0}
+.toc li{margin:2px 0}
+.toc li.l3{padding-inline-start:20px;font-size:14px;color:var(--muted)}
+.toc a{color:var(--ink);border:none}
+.toc a:hover{color:var(--accent)}
+.meta{background:#fafbff;border:1px solid var(--line);border-radius:12px;
+  padding:14px 20px;margin:0 0 26px;font-size:13.5px;color:var(--muted)}
+.meta dl{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;margin:0}
+.meta dt{font-weight:700;color:#39405c;white-space:nowrap}
+.meta dd{margin:0;direction:ltr;unicode-bidi:plaintext;text-align:start;word-break:break-word}
+.rawhtml{margin:18px 0;text-align:center}
+footer.doc{padding:20px 44px 28px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;background:#fafbff;
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer.doc a{color:var(--muted)}
+.totop{position:fixed;inset-block-end:22px;inset-inline-start:22px;
+  background:var(--accent);color:#fff;border-radius:999px;
+  width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+  text-decoration:none;border:none;box-shadow:0 6px 20px rgba(6,10,219,.28);
+  opacity:0;pointer-events:none;transition:opacity .2s;font-size:18px}
+body.scrolled .totop{opacity:.92;pointer-events:auto}
+@media (max-width:720px){
+  body{padding:12px 8px 48px;font-size:15.5px;line-height:1.95}
+  header.doc{padding:24px 20px 20px}
+  header.doc h1{font-size:21px}
+  main{padding:24px 20px 32px}
+  footer.doc{padding:16px 20px 22px}
+  h2{font-size:18px;margin-top:34px}
+}
+@media print{
+  body{background:#fff;padding:0;font-size:11.5pt;line-height:1.75}
+  .page{border:none;box-shadow:none;max-width:none}
+  .totop{display:none}
+  .codewrap pre{background:#f6f7fb;color:#1e2233;border:1px solid var(--line)}
+  h2,h3{page-break-after:avoid}
+  .tablewrap,pre,blockquote{page-break-inside:avoid}
+  a{color:inherit;border:none}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="doc">
+  <div class="kicker">projects/public/sanbuk-android/README.fa.md</div>
+  <h1 dir="ltr">Sanbuk Android SDK</h1>
+  <div class="sub">اس‌دی‌کی رسمی اندروید برای سنبوک — نمایش تبلیغ در رسانهٔ ناشر، در مدل CPA.</div>
+  <div class="chips"><a class="chip" href="README.fa.md">📄 نسخهٔ Markdown</a><span class="chip plain">RTL / فارسی</span><span class="chip plain">آخرین تغییر منبع: 2026-08-29</span></div>
+</header>
+<main>
+<nav class="toc"><div class="toc-title">فهرست مطالب</div><ul><li class="l2"><a href="#داده-اول-سرور-تبلیغ-را-توصیف-میکند،-اپ-تو-آن-را-میکشد">داده اول: سرور تبلیغ را توصیف می‌کند، اپ تو آن را می‌کشد</a></li><li class="l2"><a href="#فرمت-را-ناشر-انتخاب-میکند،-کد-تو-فقط-چطور-کشیدن-را">فرمت را ناشر انتخاب می‌کند، کد تو فقط «چطور کشیدن» را</a></li><li class="l2"><a href="#دو-ماژول،-یک-پیادهسازی">دو ماژول، یک پیاده‌سازی</a></li><li class="l2"><a href="#چه-چیزی-ساخته-شده">چه چیزی ساخته شده</a></li><li class="l2"><a href="#یک-آرتیفکت-خودبسنده">یک آرتیفکت خودبسنده</a></li><li class="l2"><a href="#پنج-قاعدهای-که-این-sdk-رویشان-ساخته-شده">پنج قاعده‌ای که این SDK رویشان ساخته شده</a></li><li class="l2"><a href="#ساخت">ساخت</a></li><li class="l2"><a href="#لایسنس">لایسنس</a></li></ul></nav>
+<p>اس‌دی‌کی رسمی اندروید برای <a href="https://sanbuk.com" target="_blank" rel="noopener">سنبوک</a> — نمایش تبلیغ در رسانهٔ ناشر، در مدل CPA.</p>
+<p><strong><a href="README.html">English guide →</a></strong></p>
+<blockquote class="quote"><p><strong>وضعیت: در حال ساخت.</strong> هر دو ماژول ساخته و تست می‌شوند؛ هنوز چیزی روی Maven Central منتشر نشده. اینترستیشیال، پاداشی و پوسته‌های یونیتی/فلاتر بعداً می‌آیند.</p></blockquote>
+<div class="codewrap"><span class="lang">kotlin</span><pre dir="ltr"><code class="language-kotlin">// یک‌بار، در Application.onCreate
+Sanbuk.init(context, mediaCode = "YOUR-MEDIA-CODE")</code></pre></div>
+<p><strong>ما بکشیم</strong> — ویویی که خودش می‌گیرد، می‌کشد، نمایش را می‌شمارد و کلیک را مسیریابی می‌کند:</p>
+<div class="codewrap"><span class="lang">kotlin</span><pre dir="ltr"><code class="language-kotlin">SanbukAdView(context).apply { load(placementCode = "HOME-TOP") }</code></pre></div>
+<p><strong>خودت بکش</strong> — همان تبلیغ به‌صورت داده، با استایل UI خودت:</p>
+<div class="codewrap"><span class="lang">kotlin</span><pre dir="ltr"><code class="language-kotlin">val ad = Sanbuk.loadAd(placementCode = "HOME-TOP")   // تیتر، تصویر، دکمه، رنگ برند
+// ...با ویوهای خودت رندرش کن...
+ad.recordImpression()   // وقتی واقعاً روی صفحه است
+ad.click()              // وقتی کاربر رویش زد</code></pre></div>
+<p><strong>تمام‌صفحه</strong> — اینترستیشیال بین دو لحظه، یا آگهی پاداشی که کاربر خودش خواسته:</p>
+<div class="codewrap"><span class="lang">kotlin</span><pre dir="ltr"><code class="language-kotlin">SanbukFullscreen.load(context, "LEVEL-END") { ad -&gt; pending = ad }
+
+pending?.show(activity, callbacks = object : SanbukFullscreen.Callbacks {
+    override fun onClosed() = startNextLevel()
+})
+
+SanbukFullscreen.loadRewarded(context, "EXTRA-LIFE") { ad -&gt;
+    ad?.show(activity, callbacks = object : SanbukFullscreen.Callbacks {
+        override fun onReward() = grantExtraLife()
+    })
+}</code></pre></div>
+<hr>
+<h2 id="داده-اول-سرور-تبلیغ-را-توصیف-میکند،-اپ-تو-آن-را-میکشد">داده اول: سرور تبلیغ را توصیف می‌کند، اپ تو آن را می‌کشد</h2>
+<p>سنبوک هرگز نشانه‌گذاری نمی‌فرستد. نه HTML، نه بنر ازپیش‌رندرشده، نه وب‌ویوی پنهان. پاسخ یک توصیف است — تیتر، متن، تصویر، متن دکمه، رنگ برند — و اینکه با آن چه می‌کنی با توست.</p>
+<p>این نکتهٔ اصلی این SDK است، نه یک جزئیات فرعی. تبلیغی که با فونت، فاصله و انیمیشن خودِ اپ کشیده شود شبیه بخشی از اپ به نظر می‌رسد، و این چیزی است که هیچ شبکه‌ای که بنر آمادهٔ رندرشده تحویل می‌دهد نمی‌تواند به تو بدهد. <code>SanbukAdView</code> فقط راحتی است روی همان داده، برای اپی که نمی‌خواهد یک بعدازظهر رویش وقت بگذارد — نه مسیر دیگری.</p>
+<p>معامله‌اش صادقانه است: وقتی ما می‌کشیم، می‌توانیم اندازه هم بگیریم. زیر <code>SanbukAdView</code> نمایش فقط وقتی گزارش می‌شود که دست‌کم نیمی از تبلیغ یک ثانیهٔ کامل روی صفحه بوده باشد. وقتی خودت می‌کشی، زمان <code>recordImpression()</code> را تو تعیین می‌کنی و ما راهی برای راستی‌آزمایی نداریم — به همین دلیل رسانه‌هایی که این‌طور ادغام می‌شوند برچسب می‌خورند و کمی دقیق‌تر پایش می‌شوند.</p>
+<h2 id="فرمت-را-ناشر-انتخاب-میکند،-کد-تو-فقط-چطور-کشیدن-را">فرمت را ناشر انتخاب می‌کند، کد تو فقط «چطور کشیدن» را</h2>
+<p><code>banner</code>، <code>native</code>، <code>interstitial</code> و <code>rewarded</code> هنگام ثبت جایگاه در پنل سنبوک انتخاب می‌شوند و پاسخ می‌گوید کدام آمده. گزارش، کمیسیون per-format و شرط سازگاری کریتیو همه به همان مقدار ثبت‌شده تکیه می‌کنند، پس چیزی نیست که کلاینت بتواند اعلامش کند.</p>
+<h2 id="دو-ماژول،-یک-پیادهسازی">دو ماژول، یک پیاده‌سازی</h2>
+<div class="tablewrap"><table><thead><tr><th style="text-align:start">ماژول</th><th style="text-align:start">چه چیزی آنجاست</th><th style="text-align:start">وابسته به اندروید؟</th></tr></thead><tbody><tr><td style="text-align:start"><code>core</code></td><td style="text-align:start">قرارداد سیم، صف آفلاین، شمارندهٔ فرکانس، قاعدهٔ شمارش نمایش، هویت نصب</td><td style="text-align:start">نه — Kotlin/JVM خالص</td></tr>
+<tr><td style="text-align:start"><code>sdk</code></td><td style="text-align:start">ویوها، Custom Tabs، ذخیره‌سازی، چرخهٔ عمر</td><td style="text-align:start">بله</td></tr></tbody></table></div>
+<p>هر چیزی که تصمیم می‌گیرد در <code>core</code> است. قاعده‌ای که داخل پوسته بنشیند باید برای هر پوسته دوباره نوشته شود — یونیتی، فلاتر، React Native — و پوسته‌ها با سرعت‌های متفاوت آپدیت می‌شوند، پس نسخه‌ها از هم دور می‌افتند. یک پیاده‌سازی، چند پل نازک.</p>
+<p>سود جانبی‌اش: <code>core</code> روی هر JDK ای کامپایل و تست می‌شود، بدون اینکه اصلاً Android SDK در کار باشد.</p>
+<h2 id="چه-چیزی-ساخته-شده">چه چیزی ساخته شده</h2>
+<div class="tablewrap"><table><thead><tr><th style="text-align:start">قطعه</th><th style="text-align:start">کار</th><th style="text-align:start">تست</th></tr></thead><tbody><tr><td style="text-align:start"><code>ServeUrl</code></td><td style="text-align:start">ساخت درخواست آگهی، با کل context موبایل</td><td style="text-align:start">۶</td></tr>
+<tr><td style="text-align:start"><code>AdParser</code></td><td style="text-align:start">خواندن پاسخ؛ هیچ ورودی خرابی نمی‌تواند استثنا بدهد</td><td style="text-align:start">۸</td></tr>
+<tr><td style="text-align:start"><code>ImpressionQueue</code></td><td style="text-align:start">صف آفلاین، محدود به اندازه و سن، با dedupe روی شناسهٔ رویداد</td><td style="text-align:start">۷</td></tr>
+<tr><td style="text-align:start"><code>ImpressionUrl</code></td><td style="text-align:start">افزودن <code>eid</code> که سرور تکراری را با آن می‌شناسد</td><td style="text-align:start">۳</td></tr>
+<tr><td style="text-align:start"><code>FrequencyCounters</code></td><td style="text-align:start">شمارش، هرس با پنجرهٔ سرور، بقا بعد از مرگ پروسه</td><td style="text-align:start">۸</td></tr>
+<tr><td style="text-align:start"><code>Viewability</code></td><td style="text-align:start">دست‌کم ۵۰٪ پیکسل‌ها برای یک ثانیهٔ پیوسته (MRC)</td><td style="text-align:start">۵</td></tr>
+<tr><td style="text-align:start"><code>ClickLauncher</code></td><td style="text-align:start">Custom Tab، با فالبک به مرورگر — هرگز WebView</td><td style="text-align:start">۴</td></tr>
+<tr><td style="text-align:start"><code>Storage</code></td><td style="text-align:start">هویت نصب و شمارنده‌هایی که از پروسه بیشتر عمر می‌کنند</td><td style="text-align:start">۴</td></tr>
+<tr><td style="text-align:start"><code>ViewabilityTracker</code></td><td style="text-align:start">تغذیهٔ قاعده هم از تغییر هندسه و هم از یک ساعت</td><td style="text-align:start">۴</td></tr>
+<tr><td style="text-align:start"><code>FullscreenPolicy</code></td><td style="text-align:start">چه وقت اینترستیشیال مجاز است قطع کند و چه وقت بستنش</td><td style="text-align:start">۶</td></tr>
+<tr><td style="text-align:start"><code>RewardPolicy</code></td><td style="text-align:start">اینکه آگهی پاداشی واقعاً تماشا شده یا نه</td><td style="text-align:start">۵</td></tr>
+<tr><td style="text-align:start"><code>FullscreenActivity</code></td><td style="text-align:start">صفحهٔ تمام‌صفحه: گیت‌ها، شمارش معکوس، جایزه، بستن</td><td style="text-align:start">۸</td></tr></tbody></table></div>
+<p><strong>۷۰ تست، صفر شکست.</strong> حجم AAR ریلیز: <strong>۱۱۳ کیلوبایت، بدون هیچ وابستگی.</strong></p>
+<h2 id="یک-آرتیفکت-خودبسنده">یک آرتیفکت خودبسنده</h2>
+<p>فایل AAR کلاس‌های <code>core</code> را در خودش دارد، نه به‌صورت وابستگی به ماژول دوم. وابستگی گرِیدل برای بیلدی که به Maven Central می‌رسد خوب است؛ خیلی‌ها نمی‌رسند — مخصوصاً پلاگین یونیتی که به‌شکل یک <code>.aar</code> دراپ‌این و بدون هیچ مرحلهٔ resolve توزیع می‌شود — و آرتیفکتی که در اولین اجرا <code>NoClassDefFoundError</code> بدهد از نبودنش بدتر است.</p>
+<p><code>core</code> یک ماژول واقعی می‌ماند تا همان سورس‌ها روی یک JVM ساده هم کامپایل و یونیت‌تست شوند.</p>
+<h2 id="پنج-قاعدهای-که-این-sdk-رویشان-ساخته-شده">پنج قاعده‌ای که این SDK رویشان ساخته شده</h2>
+<p><strong>۱. هرگز نکش، هرگز نمیر.</strong> هیچ استثنایی از این SDK نباید به اپ میزبان برسد. بدترین حالت مجاز یک جعبهٔ خالی است. کرشی که ما ساخته باشیم یعنی ریویو یک‌ستاره برای ناشر و حذف SDK.</p>
+<p><strong>۲. هیچ I/O روی ترد اصلی.</strong> ANR در کلد استارت سریع‌ترین راه حذف‌شدن است.</p>
+<p><strong>۳. تصمیم‌ها سمت سرور می‌مانند.</strong> ماچینگ، pacing، فرکانس‌کپ، دورهٔ آزمایشی، بودجه — همه سمت سرورند و همان‌جا می‌مانند. این SDK می‌پرسد، می‌کشد، و گزارش می‌دهد. نسخه‌ای که روی گوشی‌ها رفته ماه‌ها منجمد است؛ هر قاعده‌ای که اینجا سفت شود سال‌ها با ما می‌ماند.</p>
+<p><strong>۴. کلیک مرورگر واقعی را باز می‌کند.</strong> Custom Tabs، هرگز <code>WebView</code> درون‌اپ. سبد کوکی جدا انتساب first-party را می‌شکند، و در یک شبکهٔ CPA انتساب شکسته یعنی ناشر کار کرده و پولی نمی‌گیرد.</p>
+<p><strong>۵. بدون شناسهٔ تبلیغاتی.</strong> نه GAID، نه IDFA. فقط یک <code>install_id</code> تصادفی و ریست‌شدنی، برای فرکانس‌کپ و به‌عنوان کلید محدودیت نرخ که پشت CGNAT اپراتورها هنوز معنا دارد.</p>
+<h2 id="ساخت">ساخت</h2>
+<div class="codewrap"><span class="lang">bash</span><pre dir="ltr"><code class="language-bash">./gradlew build</code></pre></div>
+<p><code>core</code> فقط به یک JDK نیاز دارد و به‌تنهایی هم تست می‌شود (<code>./gradlew :core:test</code>). لایهٔ اندرویدی به Android SDK نیاز دارد؛ مسیرش را در <code>local.properties</code> بگذار:</p>
+<div class="codewrap"><pre dir="ltr"><code>sdk.dir=/path/to/Android/sdk</code></pre></div>
+<h2 id="لایسنس">لایسنس</h2>
+<p dir="ltr">Apache-2.0</p>
+</main>
+<footer class="doc">
+  <span>ساخته‌شده از فایل Markdown پروژهٔ سنبوک · 2026-08-29</span>
+  <span class="kicker">projects/public/sanbuk-android/README.fa.md</span>
+</footer>
+</div>
+<a class="totop" href="#" aria-label="بالا">&#8593;</a>
+<script>
+addEventListener('scroll',function(){document.body.classList.toggle('scrolled',scrollY>400)});
+</script>
+</body>
+</html>
