@@ -19,8 +19,24 @@ public data class SanbukConfig(
      * otherwise guesswork for everyone involved.
      */
     public val debug: Boolean = false,
+    /**
+     * The API origin. Used for one thing: the verification ping an app
+     * media needs before the server will serve it (see ir.sanbuk.sdk.core.MediaPing).
+     * Overridable for the same reason as [trackerUrl].
+     */
+    public val apiUrl: String = DEFAULT_API_URL,
 ) {
+    /**
+     * The three-argument constructor from before [apiUrl] existed, kept
+     * explicitly. Shells reach this class over JNI by argument count, where
+     * Kotlin's default arguments do not exist: without this overload a Unity
+     * build that constructs a config would compile and then crash on device.
+     */
+    public constructor(mediaCode: String, trackerUrl: String, debug: Boolean) :
+        this(mediaCode, trackerUrl, debug, DEFAULT_API_URL)
+
     public companion object {
         public const val DEFAULT_TRACKER_URL: String = "https://t.sanbuk.com"
+        public const val DEFAULT_API_URL: String = "https://api.sanbuk.com"
     }
 }

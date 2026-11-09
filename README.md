@@ -40,6 +40,12 @@ Kotlin of its own.
 Sanbuk.init(context, mediaCode = "YOUR-MEDIA-CODE")
 ```
 
+The same `init` verifies your app media. The server serves nothing to an unverified media,
+however approved it is in the panel. On first launch the SDK sends the media code with your
+app's package name, then stays quiet for 24 hours after a positive answer. The package name
+registered in the panel must equal your `applicationId` exactly; when it does not, a debug
+build logs `sdk/ping: no app media with code …`.
+
 **Let us draw it** — a view that fetches, renders, counts the view and routes the click:
 
 ```kotlin

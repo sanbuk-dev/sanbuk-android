@@ -2,12 +2,14 @@ package ir.sanbuk.sdk
 
 import androidx.test.core.app.ApplicationProvider
 import ir.sanbuk.sdk.core.FrequencyCounters
+import ir.sanbuk.sdk.core.MediaPing
 import ir.sanbuk.sdk.internal.Storage
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
@@ -58,5 +60,41 @@ class StorageTest {
     @Test
     fun `nothing stored is simply nothing counted`() {
         assertEquals(0, Storage(context).loadCounters().countFor("never-seen"))
+    }
+
+    /**
+     * The acknowledgement is what keeps every launch of every install from
+     * pinging the API host. Lost on restart, it would be a ping per launch.
+     */
+    @Test
+    fun `a ping acknowledgement survives a process restart`() {
+        val acknowledgement = MediaPing.Acknowledgement(MediaPing.subject("med456", "ir.charsoo.app"), atMillis = 1_234)
+        Storage(context).savePingAcknowledgement(acknowledgement)
+
+        assertEquals(acknowledgement, Storage(context).pingAcknowledgement())
+    }
+
+    @Test
+    fun `a first launch has no acknowledgement`() {
+        assertNull(Storage(context).pingAcknowledgement())
+    }
+
+    /**
+     * Unity and React Native build a config over JNI, where Kotlin's default
+     * arguments do not exist and constructors are matched by argument count.
+     * Adding apiUrl must not take the three-argument one away.
+     */
+    @Test
+    fun `the config keeps its three-argument constructor for shells`() {
+        val constructor = SanbukConfig::class.java.getConstructor(
+            String::class.java,
+            String::class.java,
+            Boolean::class.javaPrimitiveType,
+        )
+
+        val config = constructor.newInstance("med456", "http://localhost:8080", true)
+
+        assertEquals(SanbukConfig.DEFAULT_API_URL, config.apiUrl)
+        assertEquals("http://localhost:8080", config.trackerUrl)
     }
 }

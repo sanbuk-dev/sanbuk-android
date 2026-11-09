@@ -13,6 +13,7 @@ import ir.sanbuk.sdk.core.FrequencyCounters
 import ir.sanbuk.sdk.core.FullscreenPolicy
 import ir.sanbuk.sdk.core.ImpressionQueue
 import ir.sanbuk.sdk.core.ImpressionUrl
+import ir.sanbuk.sdk.core.MediaPing
 import ir.sanbuk.sdk.core.QueuedImpression
 import ir.sanbuk.sdk.core.RenderMode
 import ir.sanbuk.sdk.internal.ClickLauncher
@@ -92,6 +93,37 @@ internal class SanbukSession(
             installId = storage.installId()
             counters = storage.loadCounters()
             flushQueue()
+        }
+        // Detached, not on the worker: nothing waits on this answer, and on a
+        // dead network it would otherwise hold the first ad request behind it
+        // for a full timeout.
+        Worker.detached("sanbuk-ping") { pingIfDue() }
+    }
+
+    /**
+     * Verifies this app media with the server — without it an approved app
+     * media is never served (see [MediaPing]). The package name travels with
+     * the code, so a code lifted from someone's snippet verifies nothing.
+     */
+    private fun pingIfDue() {
+        val packageName = context.packageName
+        val subject = MediaPing.subject(config.mediaCode, packageName)
+        val now = System.currentTimeMillis()
+        if (!MediaPing.isDue(storage.pingAcknowledgement(), subject, now)) return
+
+        val result = Http.postJson(MediaPing.url(config.apiUrl), MediaPing.body(config.mediaCode, packageName))
+        when {
+            result.ok && MediaPing.acknowledged(result.body) -> {
+                storage.savePingAcknowledgement(MediaPing.Acknowledgement(subject, now))
+                SanbukLog.debug("media verified (sdk/ping ok)")
+            }
+            // The one answer an integrator must act on, so it is a warning:
+            // nothing will ever be served to this app until it is fixed.
+            result.ok -> SanbukLog.warn(
+                "sdk/ping: no app media with code ${config.mediaCode} and package $packageName — " +
+                    "check the media in the Sanbuk panel; no ads will be served until they match",
+            )
+            else -> SanbukLog.debug("sdk/ping answered ${result.status}; will try again on the next launch")
         }
     }
 

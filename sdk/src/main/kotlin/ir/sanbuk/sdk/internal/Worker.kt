@@ -36,6 +36,22 @@ internal object Worker {
         runCatching { executor.execute { runCatching(block) } }
     }
 
+    /**
+     * Off the main thread AND off the shared worker, for a request whose
+     * answer nothing is waiting on. The worker is single-threaded, so a
+     * fire-and-forget call stuck on a dead network for its full timeout
+     * would hold every ad request queued behind it. Same rules otherwise:
+     * daemon, lowest priority, a throw stays here.
+     */
+    fun detached(name: String, block: () -> Unit) {
+        runCatching {
+            Thread({ runCatching(block) }, name).apply {
+                isDaemon = true
+                priority = Thread.MIN_PRIORITY
+            }.start()
+        }
+    }
+
     /** Hands a result back to the thread the publisher's UI lives on. */
     fun onMain(block: () -> Unit) {
         if (Looper.myLooper() == Looper.getMainLooper()) {

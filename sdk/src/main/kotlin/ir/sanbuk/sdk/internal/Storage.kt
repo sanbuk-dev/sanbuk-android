@@ -3,6 +3,7 @@ package ir.sanbuk.sdk.internal
 import android.content.Context
 import android.content.SharedPreferences
 import ir.sanbuk.sdk.core.FrequencyCounters
+import ir.sanbuk.sdk.core.MediaPing
 import java.util.UUID
 
 /**
@@ -43,9 +44,27 @@ internal class Storage(context: Context) {
         runCatching { prefs?.edit()?.putString(KEY_COUNTERS, counters.encode())?.apply() }
     }
 
+    /** The last "ok" from the verification ping, if any — see [MediaPing]. */
+    fun pingAcknowledgement(): MediaPing.Acknowledgement? = runCatching {
+        val subject = prefs?.getString(KEY_PING_SUBJECT, null) ?: return@runCatching null
+        val at = prefs.getLong(KEY_PING_AT, Long.MIN_VALUE)
+        if (at == Long.MIN_VALUE) null else MediaPing.Acknowledgement(subject, at)
+    }.getOrNull()
+
+    fun savePingAcknowledgement(acknowledgement: MediaPing.Acknowledgement) {
+        runCatching {
+            prefs?.edit()
+                ?.putString(KEY_PING_SUBJECT, acknowledgement.subject)
+                ?.putLong(KEY_PING_AT, acknowledgement.atMillis)
+                ?.apply()
+        }
+    }
+
     private companion object {
         const val FILE = "ir.sanbuk.sdk"
         const val KEY_INSTALL_ID = "install_id"
         const val KEY_COUNTERS = "frequency_counters"
+        const val KEY_PING_SUBJECT = "ping_subject"
+        const val KEY_PING_AT = "ping_at"
     }
 }

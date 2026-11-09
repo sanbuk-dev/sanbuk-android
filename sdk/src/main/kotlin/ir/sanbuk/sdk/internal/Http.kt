@@ -16,6 +16,7 @@ internal data class HttpResult(val status: Int, val body: String) {
  * publisher's weight, and a networking library is the single largest thing we
  * could add — for two GET requests. It also avoids the version conflict every
  * publisher who already ships OkHttp would otherwise inherit from us.
+ * (Two GETs and one small POST, since the verification ping.)
  *
  * Callers are responsible for being off the main thread; see [Worker].
  */
@@ -35,26 +36,52 @@ internal object Http {
         }
 
         try {
-            val status = connection.responseCode
-            val stream = if (status in 200..299) connection.inputStream else connection.errorStream
-            val body = stream?.use { input ->
-                val buffer = ByteArrayOutputStream()
-                val chunk = ByteArray(4096)
-                var read = input.read(chunk)
-                var total = 0
-                while (read >= 0 && total < MAX_BODY_BYTES) {
-                    buffer.write(chunk, 0, read)
-                    total += read
-                    read = input.read(chunk)
-                }
-                buffer.toString("UTF-8")
-            }.orEmpty()
-
-            HttpResult(status, body)
+            readResult(connection)
         } finally {
             runCatching { connection.disconnect() }
         }
     }.getOrElse { HttpResult(status = 0, body = "") }
+
+    /** A small JSON body to the API host — today only the verification ping. */
+    fun postJson(url: String, json: String, timeoutMs: Int = TIMEOUT_MS): HttpResult = runCatching {
+        val bytes = json.toByteArray(Charsets.UTF_8)
+        val connection = (URL(url).openConnection() as HttpURLConnection).apply {
+            requestMethod = "POST"
+            connectTimeout = timeoutMs
+            readTimeout = timeoutMs
+            instanceFollowRedirects = false
+            doOutput = true
+            setFixedLengthStreamingMode(bytes.size)
+            setRequestProperty("Content-Type", "application/json; charset=utf-8")
+            setRequestProperty("Accept", "application/json")
+        }
+
+        try {
+            connection.outputStream.use { it.write(bytes) }
+            readResult(connection)
+        } finally {
+            runCatching { connection.disconnect() }
+        }
+    }.getOrElse { HttpResult(status = 0, body = "") }
+
+    private fun readResult(connection: HttpURLConnection): HttpResult {
+        val status = connection.responseCode
+        val stream = if (status in 200..299) connection.inputStream else connection.errorStream
+        val body = stream?.use { input ->
+            val buffer = ByteArrayOutputStream()
+            val chunk = ByteArray(4096)
+            var read = input.read(chunk)
+            var total = 0
+            while (read >= 0 && total < MAX_BODY_BYTES) {
+                buffer.write(chunk, 0, read)
+                total += read
+                read = input.read(chunk)
+            }
+            buffer.toString("UTF-8")
+        }.orEmpty()
+
+        return HttpResult(status, body)
+    }
 
     /** Same rules, for a creative image rather than a decision. */
     fun getBytes(url: String, timeoutMs: Int = TIMEOUT_MS): ByteArray = runCatching {
